@@ -1,0 +1,20 @@
+on:
+  push:
+    branches:
+      - master
+name: Build VSCode Extension
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm install
+      - uses: lannonbr/vsce-action@master
+        with:
+          args: "package"
+      
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v2
+        with:
+          name: built_component
+          path: ./*.vsix
